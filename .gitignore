@@ -1,0 +1,20 @@
+# common directory names
+target/
+tmp/
+
+# common filenames
+.DS_Store
+npm-debug.log
+
+# wildcards
+*.tmp
+*.swp
+*.iml
+*~
+.#*
+\#*
+
+# other
+/node_modules/
+/release/
+/.projections.json
