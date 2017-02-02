@@ -1,0 +1,14 @@
+{
+  "name": "phaser-sandbox",
+  "description": "Our personal sandbox for playing with Phaser",
+  "repository": "https://github.com/TheBizzle/PhaserSandbox",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "gulp":            "3.9.1"
+  , "gulp-sourcemaps": "1.9.1"
+  , "gulp-typescript": "3.1.3"
+  , "merge2":          "1.0.2"
+  , "typescript":      "2.1.4"
+  }
+}
