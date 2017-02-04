@@ -15,9 +15,7 @@ gulp.task('scripts', function() {
 
   var srcs = gulp.src('src/*.ts')
 
-  var ractive = gulp.src('node_modules/ractive/typings/ractive.d.ts')
-
-  var tsResult = merge(srcs, ractive).pipe(sourcemaps.init()).pipe(tsProject());
+  var tsResult = merge(srcs, []).pipe(sourcemaps.init()).pipe(tsProject());
 
   var tsDefs = tsResult.dts.pipe(gulp.dest('release/definitions'));
 
