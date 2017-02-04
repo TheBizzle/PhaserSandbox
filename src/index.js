@@ -39,6 +39,7 @@ window.onload = function() {
       { name: "player", x: 100, y: 200, spriteName: "player" }
     , { name: "npc1"  , x: 500, y: 400, spriteName: "npc1" }
     , { name: "npc2"  , x: 460, y: 400, spriteName: "npc1" }
+    , { name: "npc3"  , x: 515, y: 120, spriteName: "npc1" }
     ];
     
     entitySpecs.forEach(function(spec) {
