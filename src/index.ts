@@ -102,7 +102,8 @@ window.addEventListener('load', function() {
     }
 
     if (player.y >= (game.height - player.height)) {
-      player.kill();
+      game.state.restart();
+      create();
     }
 
   }
