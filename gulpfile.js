@@ -13,9 +13,11 @@ var tsProject =
 
 gulp.task('scripts', function() {
 
-  var srcs = gulp.src('src/*.ts')
+  var srcs = gulp.src('src/*.ts');
 
-  var tsResult = merge(srcs, []).pipe(sourcemaps.init()).pipe(tsProject());
+  var phaserTypeDefs = gulp.src('../v2/typescript/phaser.d.ts');
+
+  var tsResult = merge(srcs, phaserTypeDefs).pipe(sourcemaps.init()).pipe(tsProject());
 
   var tsDefs = tsResult.dts.pipe(gulp.dest('release/definitions'));
 
