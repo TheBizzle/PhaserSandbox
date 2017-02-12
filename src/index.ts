@@ -68,6 +68,12 @@ window.addEventListener('load', function() {
     cursors    = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
+    for (var key in entities) {
+      if (key !== "player") {
+        entities[key].body.velocity.x = game.rnd.between(-250, 250);
+      }
+    }
+
   }
 
   function murder(player1: Phaser.Sprite, player2: Phaser.Sprite) {
