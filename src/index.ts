@@ -61,7 +61,7 @@ window.addEventListener('load', function() {
 
     platforms.create( 500, 150, 'platform');
     platforms.create(-200, 300, 'platform');
-    platforms.create( 400, 450, 'platform');
+    platforms.create( 100, 450, 'platform');
 
     platforms.setAll('body.immovable', true);
 
