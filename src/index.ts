@@ -107,9 +107,16 @@ window.addEventListener('load', function() {
       player.body.velocity.y = -400;
     }
 
-    if (player.y >= (game.height - player.height)) {
-      game.state.restart();
-      create();
+    for (var key in entities) {
+      if (entities[key].y >= (game.height - entities[key].height)) {
+
+        entities[key].kill();
+
+        if (entities[key] === player) {
+          game.state.restart();
+          create();
+        }
+      }
     }
 
   }
