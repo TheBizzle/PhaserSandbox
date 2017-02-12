@@ -71,7 +71,9 @@ window.addEventListener('load', function() {
     for (var key in entities) {
       if (key !== "player") {
         entities[key].body.velocity.x = game.rnd.between(-250, 250);
+        entities[key].body.desiredVelocity = entities[key].body.velocity.x;
       }
+
     }
 
   }
@@ -79,6 +81,51 @@ window.addEventListener('load', function() {
   function murder(player1: Phaser.Sprite, player2: Phaser.Sprite) {
     player2.body.velocity.y = -250;
     player1.kill();
+  }
+
+  let moveClowns = function() {
+
+    for (var key in entities) {
+      if (key !== "player") {
+
+        let clown = entities[key];
+        game.physics.arcade.collide(clown, entities['player'], murder);
+
+        let nearestPlatform = (<Phaser.Sprite> platforms.children.sort(
+          function(p1, p2) {
+            if (Math.abs(p1.y - clown.y) < Math.abs(p2.y - clown.y)) {
+              return -1;
+            } else {
+              return 1;
+            };
+          }
+        )[0]);
+
+        if (clown.x < nearestPlatform.x) {
+          clown.x = Math.max(nearestPlatform.x, 0);
+        } else if ((clown.x + clown.width) > (nearestPlatform.width + nearestPlatform.x)) {
+          clown.x = Math.min(nearestPlatform.width + nearestPlatform.x, game.width) - clown.width;
+        }
+
+        let isAtPlatformLeftEdge  = clown.x <= nearestPlatform.x;
+        let isAtGameLeftEdge      = clown.x <= 0;
+        let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clown.x);
+        let isAtGameRightEdge     = (clown.x + clown.width) >= game.width; // Ryan likes clown speed
+        let antiJitterFactor      = 3.5;
+
+        if (isAtPlatformLeftEdge || isAtGameLeftEdge) {
+          entities[key].body.velocity.x      = -entities[key].body.desiredVelocity;
+          entities[key].body.desiredVelocity = entities[key].body.velocity.x;
+          clown.x = Math.max(nearestPlatform.x, 0) + antiJitterFactor;
+        } else if (isAtPlatformRightEdge || isAtGameRightEdge) {
+          entities[key].body.velocity.x      = -entities[key].body.desiredVelocity;
+          entities[key].body.desiredVelocity = entities[key].body.velocity.x;
+          clown.x = Math.min((nearestPlatform.x + nearestPlatform.width), game.width) - (clown.width + antiJitterFactor);
+        }
+
+      }
+    }
+
   }
 
   function update() {
@@ -89,11 +136,7 @@ window.addEventListener('load', function() {
 
     var player = entities['player'];
 
-    for (var key in entities) {
-      if (key !== "player") {
-        game.physics.arcade.collide(entities[key], player, murder);
-      }
-    }
+    moveClowns();
 
     player.body.velocity.x = 0;
 
@@ -118,7 +161,6 @@ window.addEventListener('load', function() {
         }
       }
     }
-
   }
 
 });
