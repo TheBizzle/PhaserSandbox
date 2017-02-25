@@ -111,7 +111,7 @@ window.addEventListener('load', function() {
         let isAtGameLeftEdge      = clown.x <= 0;
         let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clown.x);
         let isAtGameRightEdge     = (clown.x + clown.width) >= game.width; // Ryan likes clown speed
-        let antiJitterFactor      = 3.5;
+        let antiJitterFactor      = 4.5;
 
         if (isAtPlatformLeftEdge || isAtGameLeftEdge) {
           entities[key].body.velocity.x      = -entities[key].body.desiredVelocity;
