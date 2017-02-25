@@ -86,7 +86,7 @@ window.addEventListener('load', function() {
   let moveClowns = function() {
 
     for (var key in entities) {
-      if (key !== "player") {
+      if (key.indexOf("npc") != -1) {
 
         let clown = entities[key];
         game.physics.arcade.collide(clown, entities['player'], murder);
