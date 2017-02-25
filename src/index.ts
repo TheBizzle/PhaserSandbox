@@ -4,10 +4,27 @@ window.addEventListener('load', function() {
     [index: string]: Phaser.Sprite
   }
 
+  interface Size {}
+
+  class DefaultSize implements Size {}
+
+  let defaultSize = new DefaultSize()
+
+  class CustomSize implements Size {
+    x: number;
+    y: number;
+    constructor(newX: number, newY: number) {
+      this.x = newX;
+      this.y = newY;
+    }
+  }
+
   type Spec = {
     name: string;
     x: number;
     y: number;
+    gravityY: number;
+    size: Size;
     spriteName: string;
   }
 
@@ -40,17 +57,22 @@ window.addEventListener('load', function() {
 
       game.physics.arcade.enable(entity);
       entity.body.collideWorldBounds = true;
-      entity.body.gravity.y          = 500;
+      entity.body.gravity.y          = spec.gravityY;
+
+      if (spec.size instanceof CustomSize) {
+        entity.width = spec.size.x;
+        entity.height = spec.size.y;
+      }
 
       return entity;
 
     };
 
     var entitySpecs = [
-      { name: "player", x: 100, y: 200, spriteName: "player" }
-    , { name: "npc1"  , x: 500, y: 400, spriteName: "npc1" }
-    , { name: "npc2"  , x: 460, y: 400, spriteName: "npc1" }
-    , { name: "npc3"  , x: 515, y: 120, spriteName: "npc1" }
+      { name: "player", x: 100, y: 200, gravityY: 500, size: defaultSize, spriteName: "player" }
+    , { name: "npc1"  , x: 500, y: 400, gravityY: 500, size: defaultSize, spriteName: "npc1" }
+    , { name: "npc2"  , x: 460, y: 400, gravityY: 500, size: defaultSize, spriteName: "npc1" }
+    , { name: "npc3"  , x: 515, y: 120, gravityY: 500, size: defaultSize, spriteName: "npc1" }
     ];
 
     entitySpecs.forEach(function(spec: Spec) {
