@@ -152,15 +152,14 @@ window.addEventListener('load', function() {
 
     for (var key in entities) {
       if (entities[key].y >= (game.height - entities[key].height)) {
-
         entities[key].kill();
-
-        if (entities[key] === player) {
-          game.state.restart();
-          create();
-        }
       }
     }
+
+    if (!player.alive) {
+      game.state.restart();
+    }
+
   }
 
 });
