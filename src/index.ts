@@ -78,9 +78,17 @@ window.addEventListener('load', function() {
 
   }
 
-  function murder(player1: Phaser.Sprite, player2: Phaser.Sprite) {
-    player2.body.velocity.y = -250;
-    player1.kill();
+  function murder(clown: Phaser.Sprite, player: Phaser.Sprite) {
+
+    let playerBottom = player.y + player.height;
+
+    if(playerBottom > (clown.y + 6)){
+      player.kill();
+    } else {
+      player.body.velocity.y = -250;
+      clown.kill();
+    }
+
   }
 
   let moveClowns = function() {
