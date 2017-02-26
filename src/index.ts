@@ -36,7 +36,7 @@ window.addEventListener('load', function() {
   let cursors: Phaser.CursorKeys;
   let jumpButton: Phaser.Key;
 
-  function preload() {
+  function preload(): void {
 
     game.stage.backgroundColor = '#85b5e1';
 
@@ -49,9 +49,9 @@ window.addEventListener('load', function() {
 
   }
 
-  function create() {
+  function create(): void {
 
-    let createEntity = function(spec: Spec) {
+    let createEntity = function(spec: Spec): Phaser.Sprite {
 
       let entity = game.add.sprite(spec.x, spec.y, spec.spriteName);
 
@@ -100,7 +100,7 @@ window.addEventListener('load', function() {
 
   }
 
-  function murder(clown: Phaser.Sprite, player: Phaser.Sprite) {
+  function murder(clown: Phaser.Sprite, player: Phaser.Sprite): void {
 
     let playerBottom = player.y + player.height;
 
@@ -113,7 +113,7 @@ window.addEventListener('load', function() {
 
   }
 
-  let moveClowns = function() {
+  let moveClowns = function(): void {
 
     for (var key in entities) {
       if (key.indexOf("npc") != -1) {
@@ -158,7 +158,7 @@ window.addEventListener('load', function() {
 
   }
 
-  function update() {
+  function update(): void {
 
 
     for (let key in entities) {
