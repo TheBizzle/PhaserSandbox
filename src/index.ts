@@ -113,48 +113,47 @@ window.addEventListener('load', function() {
 
   }
 
-  let moveClowns = function(): void {
+  let moveClowns = function(clowns: Array<Phaser.Sprite>, player: Phaser.Sprite): void {
 
-    for (var key in entities) {
-      if (key.indexOf("npc") != -1) {
 
-        let clown = entities[key];
-        game.physics.arcade.collide(clown, entities['player'], murder);
 
-        let nearestPlatform = (<Phaser.Sprite> platforms.children.sort(
-          function(p1, p2) {
-            if (Math.abs(p1.y - clown.y) < Math.abs(p2.y - clown.y)) {
-              return -1;
-            } else {
-              return 1;
-            };
-          }
-        )[0]);
+    clowns.forEach((clown) => {
 
-        if (clown.x < nearestPlatform.x) {
-          clown.x = Math.max(nearestPlatform.x, 0);
-        } else if ((clown.x + clown.width) > (nearestPlatform.width + nearestPlatform.x)) {
-          clown.x = Math.min(nearestPlatform.width + nearestPlatform.x, game.width) - clown.width;
+      game.physics.arcade.collide(clown, player, murder);
+
+      let nearestPlatform = (<Phaser.Sprite> platforms.children.sort(
+        function(p1, p2) {
+          if (Math.abs(p1.y - clown.y) < Math.abs(p2.y - clown.y)) {
+            return -1;
+          } else {
+            return 1;
+          };
         }
+      )[0]);
 
-        let isAtPlatformLeftEdge  = clown.x <= nearestPlatform.x;
-        let isAtGameLeftEdge      = clown.x <= 0;
-        let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clown.x);
-        let isAtGameRightEdge     = (clown.x + clown.width) >= game.width; // Ryan likes clown speed
-        let antiJitterFactor      = 4.5;
-
-        if (isAtPlatformLeftEdge || isAtGameLeftEdge) {
-          entities[key].body.velocity.x      = -entities[key].body.desiredVelocity;
-          entities[key].body.desiredVelocity = entities[key].body.velocity.x;
-          clown.x = Math.max(nearestPlatform.x, 0) + antiJitterFactor;
-        } else if (isAtPlatformRightEdge || isAtGameRightEdge) {
-          entities[key].body.velocity.x      = -entities[key].body.desiredVelocity;
-          entities[key].body.desiredVelocity = entities[key].body.velocity.x;
-          clown.x = Math.min((nearestPlatform.x + nearestPlatform.width), game.width) - (clown.width + antiJitterFactor);
-        }
-
+      if (clown.x < nearestPlatform.x) {
+        clown.x = Math.max(nearestPlatform.x, 0);
+      } else if ((clown.x + clown.width) > (nearestPlatform.width + nearestPlatform.x)) {
+        clown.x = Math.min(nearestPlatform.width + nearestPlatform.x, game.width) - clown.width;
       }
-    }
+
+      let isAtPlatformLeftEdge  = clown.x <= nearestPlatform.x;
+      let isAtGameLeftEdge      = clown.x <= 0;
+      let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clown.x);
+      let isAtGameRightEdge     = (clown.x + clown.width) >= game.width; // Ryan likes clown speed
+      let antiJitterFactor      = 4.5;
+
+      if (isAtPlatformLeftEdge || isAtGameLeftEdge) {
+        clown.body.velocity.x      = -clown.body.desiredVelocity;
+        clown.body.desiredVelocity = clown.body.velocity.x;
+        clown.x = Math.max(nearestPlatform.x, 0) + antiJitterFactor;
+      } else if (isAtPlatformRightEdge || isAtGameRightEdge) {
+        clown.body.velocity.x      = -clown.body.desiredVelocity;
+        clown.body.desiredVelocity = clown.body.velocity.x;
+        clown.x = Math.min((nearestPlatform.x + nearestPlatform.width), game.width) - (clown.width + antiJitterFactor);
+      }
+
+    });
 
   }
 
@@ -167,7 +166,15 @@ window.addEventListener('load', function() {
 
     let player = entities['player'];
 
-    moveClowns();
+    let clowns = [];
+
+    for (let key in entities) {
+      if (key.indexOf("npc") != -1) {
+        clowns.push(entities[key]);
+      }
+    }
+
+    moveClowns(clowns, player);
 
     player.body.velocity.x = 0;
 
