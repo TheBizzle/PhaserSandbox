@@ -28,9 +28,9 @@ window.addEventListener('load', function() {
     spriteName: string;
   }
 
-  var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+  let game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
 
-  var entities: EntityObject = {};
+  let entities: EntityObject = {};
 
   let platforms: Phaser.Group;
   let cursors: Phaser.CursorKeys;
@@ -53,7 +53,7 @@ window.addEventListener('load', function() {
 
     let createEntity = function(spec: Spec) {
 
-      var entity = game.add.sprite(spec.x, spec.y, spec.spriteName);
+      let entity = game.add.sprite(spec.x, spec.y, spec.spriteName);
 
       game.physics.arcade.enable(entity);
       entity.body.collideWorldBounds = true;
@@ -90,8 +90,8 @@ window.addEventListener('load', function() {
     cursors    = game.input.keyboard.createCursorKeys();
     jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-    for (var key in entities) {
-      if (key !== "player") {
+    for (let key in entities) {
+      if (key.indexOf("npc") != -1) {
         entities[key].body.velocity.x = game.rnd.between(-250, 250);
         entities[key].body.desiredVelocity = entities[key].body.velocity.x;
       }
@@ -160,11 +160,12 @@ window.addEventListener('load', function() {
 
   function update() {
 
-    for (var key in entities) {
+
+    for (let key in entities) {
       game.physics.arcade.collide(entities[key], platforms);
     }
 
-    var player = entities['player'];
+    let player = entities['player'];
 
     moveClowns();
 
@@ -180,7 +181,7 @@ window.addEventListener('load', function() {
       player.body.velocity.y = -400;
     }
 
-    for (var key in entities) {
+    for (let key in entities) {
       if (entities[key].y >= (game.height - entities[key].height)) {
         entities[key].kill();
       }
