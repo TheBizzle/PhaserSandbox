@@ -100,15 +100,15 @@ window.addEventListener('load', function() {
 
   }
 
-  function murder(clown: Phaser.Sprite, player: Phaser.Sprite): void {
+  function murder(baddie: Phaser.Sprite, player: Phaser.Sprite): void {
 
     let playerBottom = player.y + player.height;
 
-    if(playerBottom > (clown.y + 6)){
+    if(playerBottom > (baddie.y + 6)) {
       player.kill();
     } else {
       player.body.velocity.y = -250;
-      clown.kill();
+      baddie.kill();
     }
 
   }
