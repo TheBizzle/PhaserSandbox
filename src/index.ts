@@ -32,8 +32,8 @@ window.addEventListener('load', function() {
 
   let entities: EntityObject = {};
 
-  let platforms: Phaser.Group;
-  let cursors: Phaser.CursorKeys;
+  let platforms:  Phaser.Group;
+  let cursors:    Phaser.CursorKeys;
   let jumpButton: Phaser.Key;
 
   function preload(): void {
@@ -61,7 +61,7 @@ window.addEventListener('load', function() {
       entity.body.gravity.y          = spec.gravityY;
 
       if (spec.size instanceof CustomSize) {
-        entity.width = spec.size.x;
+        entity.width  = spec.size.x;
         entity.height = spec.size.y;
       }
 
@@ -184,7 +184,6 @@ window.addEventListener('load', function() {
   }
 
   function update(): void {
-
 
     for (let key in entities) {
       game.physics.arcade.collide(entities[key], platforms);
