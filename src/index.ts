@@ -46,7 +46,7 @@ window.addEventListener('load', function() {
     game.load.image('player'  , 'sprites/phaser-dude.png');
     game.load.image('npc1'    , 'sprites/clown.png');
     game.load.image('platform', 'sprites/platform.png');
-    game.load.image('wasp'    , 'sprites/wasp.png');
+    game.load.image('face'    , 'sprites/clownhead.gif');
 
   }
 
@@ -74,7 +74,7 @@ window.addEventListener('load', function() {
     , { name: "npc1"  , x: 500, y: 400, gravityY: 500, size:            defaultSize, spriteName: "npc1" }
     , { name: "npc2"  , x: 460, y: 400, gravityY: 500, size:            defaultSize, spriteName: "npc1" }
     , { name: "npc3"  , x: 515, y: 120, gravityY: 500, size:            defaultSize, spriteName: "npc1" }
-    , { name: "wasp"  , x: 650, y: 550, gravityY:   0, size: new CustomSize(50, 25), spriteName: "wasp" }
+    , { name: "face"  , x: 650, y: 500, gravityY:   0, size: new CustomSize(50, 75), spriteName: "face" }
     ];
 
     entitySpecs.forEach(function(spec: Spec) {
@@ -115,24 +115,22 @@ window.addEventListener('load', function() {
 
   }
 
-  let moveWasps = function(wasps: Array<Phaser.Sprite>, player: Phaser.Sprite): void {
-    wasps.forEach((wasp) => {
+  let moveFaces = function(faces: Array<Phaser.Sprite>, player: Phaser.Sprite): void {
+    faces.forEach((face) => {
 
-      game.physics.arcade.collide(wasp, player, murder);
+      game.physics.arcade.collide(face, player, murder);
 
-      if (Phaser.Point.distance(wasp.world, player.world) < 350) {
+      if (Phaser.Point.distance(face.world, player.world) < 350) {
 
        type AngleBetweenable = { angleBetween(x1: number, y1: number, x2: number, y2: number): number } // TODO: Jason, fix this
        let rotation = (<AngleBetweenable> game.math).angleBetween(
           player.x, player.y,
-          wasp.x, wasp.y
+          face.x, face.y
         );
-        let waspSpeed = -250;
+        let faceSpeed = -250;
 
-        wasp.rotation = rotation;
-
-        wasp.body.velocity.x = Math.cos(rotation) * waspSpeed;
-        wasp.body.velocity.y = Math.sin(rotation) * waspSpeed;
+        face.body.velocity.x = Math.cos(rotation) * faceSpeed;
+        face.body.velocity.y = Math.sin(rotation) * faceSpeed;
 
 
       };
@@ -201,15 +199,15 @@ window.addEventListener('load', function() {
 
     moveClowns(clowns, player);
 
-    let wasps = [];
+    let faces = [];
 
     for (let key in entities) {
-      if (key.indexOf("wasp") != -1){
-        wasps.push(entities[key]);
+      if (key.indexOf("face") != -1){
+        faces.push(entities[key]);
       }
     }
 
-    moveWasps(wasps, player);
+    moveFaces(faces, player);
 
     player.body.velocity.x = 0;
 
