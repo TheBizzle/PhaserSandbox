@@ -40,7 +40,7 @@ window.addEventListener('load', function() {
 
     game.stage.backgroundColor = '#85b5e1';
 
-    game.load.baseURL     = 'http://examples.phaser.io/assets/';
+    game.load.baseURL     = '/assets/';
     game.load.crossOrigin = 'anonymous';
 
     game.load.image('player'  , 'sprites/phaser-dude.png');
