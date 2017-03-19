@@ -162,16 +162,14 @@ window.addEventListener('load', function() {
       }
 
       let isAtPlatformLeftEdge  = clown.x <= nearestPlatform.x;
-      let isAtGameLeftEdge      = clown.x <= 0;
       let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clown.x);
-      let isAtGameRightEdge     = (clown.x + clown.width) >= game.width; // Ryan likes clown speed
       let antiJitterFactor      = 4.5;
 
-      if (isAtPlatformLeftEdge || isAtGameLeftEdge) {
+      if (isAtPlatformLeftEdge) {
         clown.body.velocity.x      = -clown.body.desiredVelocity;
         clown.body.desiredVelocity = clown.body.velocity.x;
         clown.x = Math.max(nearestPlatform.x, 0) + antiJitterFactor;
-      } else if (isAtPlatformRightEdge || isAtGameRightEdge) {
+      } else if (isAtPlatformRightEdge) {
         clown.body.velocity.x      = -clown.body.desiredVelocity;
         clown.body.desiredVelocity = clown.body.velocity.x;
         clown.x = Math.min((nearestPlatform.x + nearestPlatform.width), game.width) - (clown.width + antiJitterFactor);
