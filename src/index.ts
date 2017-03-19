@@ -172,7 +172,7 @@ window.addEventListener('load', function() {
       } else if (isAtPlatformRightEdge) {
         clown.body.velocity.x      = -clown.body.desiredVelocity;
         clown.body.desiredVelocity = clown.body.velocity.x;
-        clown.x = Math.min((nearestPlatform.x + nearestPlatform.width), game.width) - (clown.width + antiJitterFactor);
+        clown.x = Math.min((nearestPlatform.x + nearestPlatform.width), game.world.bounds.width) - (clown.width + antiJitterFactor);
       }
 
     });
