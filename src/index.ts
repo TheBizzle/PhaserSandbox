@@ -143,6 +143,12 @@ window.addEventListener('load', function() {
 
     clowns.forEach((clown) => {
 
+      let clownPos = clown.x;
+
+      if (clownPos <= .001) {
+        clownPos = 0;
+      }
+
       game.physics.arcade.collide(clown, player, murder);
 
       let nearestPlatform = (<Phaser.Sprite> platforms.children.sort(
@@ -155,14 +161,14 @@ window.addEventListener('load', function() {
         }
       )[0]);
 
-      if (clown.x < nearestPlatform.x) {
+      if (clownPos < nearestPlatform.x) {
         clown.x = Math.max(nearestPlatform.x, 0);
-      } else if ((clown.x + clown.width) > (nearestPlatform.width + nearestPlatform.x)) {
+      } else if ((clownPos + clown.width) > (nearestPlatform.width + nearestPlatform.x)) {
         clown.x = Math.min(nearestPlatform.width + nearestPlatform.x, game.width) - clown.width;
       }
 
-      let isAtPlatformLeftEdge  = clown.x <= nearestPlatform.x;
-      let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clown.x);
+      let isAtPlatformLeftEdge  = clownPos <= nearestPlatform.x;
+      let isAtPlatformRightEdge = (nearestPlatform.width + nearestPlatform.x) <= (clown.width + clownPos);
       let antiJitterFactor      = 4.5;
 
       if (isAtPlatformLeftEdge) {
